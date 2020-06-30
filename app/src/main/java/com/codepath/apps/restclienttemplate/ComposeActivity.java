@@ -98,9 +98,7 @@ public class ComposeActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
+    public void onCancelClick(View view) {
+        finish();
     }
 }
