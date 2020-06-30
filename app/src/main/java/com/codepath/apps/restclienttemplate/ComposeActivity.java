@@ -21,7 +21,7 @@ public class ComposeActivity extends AppCompatActivity {
 
     private static final String TAG = "ComposeActivity";
 
-    public static final int MAX_TWEET_LENGTH = 140;
+    public static int MAX_TWEET_LENGTH;
 
     EditText etCompose;
     Button btnTweet;
@@ -36,6 +36,8 @@ public class ComposeActivity extends AppCompatActivity {
 
         client = TwitterApp.getRestClient(this);
 
+        MAX_TWEET_LENGTH = this.getResources().getInteger(R.integer.max_tweet_length);
+        
         etCompose = findViewById(R.id.etCompose);
         btnTweet = findViewById(R.id.btnTweet);
 
@@ -74,7 +76,7 @@ public class ComposeActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                btnTweet.setEnabled(s.length() != 0);
+                btnTweet.setEnabled(s.length() != 0 && s.length() <= MAX_TWEET_LENGTH);
             }
 
             @Override
