@@ -47,6 +47,7 @@ The following **additional** features are implemented:
 * [x] Stylized the typography of TextViews for better readability
 * [x] App shows full tweets instead of summaries by referencing the [Tweet Updates API](https://developer.twitter.com/en/docs/tweets/tweet-updates)
 * [x] Used floating action button from the material design library to compose tweets just like the native Twitter App 
+* [x] "Tweet" button is dynamically enabled/disabled depending on if tweet is valid (more than 0 characters but less than 280)
 
 ## Video Walkthrough
 
