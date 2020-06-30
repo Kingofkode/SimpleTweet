@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -63,7 +64,8 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     public void onComposeClick(View view) {
-
+        Intent composeIntent = new Intent(this, ComposeActivity.class);
+        startActivity(composeIntent);
     }
 
     private void setupPullToRefresh() {
