@@ -74,7 +74,7 @@ public class ComposeActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                btnTweet.setEnabled(s.length() == 0);
+                btnTweet.setEnabled(s.length() != 0);
             }
 
             @Override
