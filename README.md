@@ -57,9 +57,12 @@ Here's a walkthrough of implemented user stories:
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
-## Notes
+## Challenges while building the app
 
-Describe any challenges encountered while building the app.
+- Getting the keyboard to pop up automatically when ComposeActivity launches took a lot of research, but to accomplish this it takes 2 steps:
+  
+  1. Set android:windowSoftInputMode="stateVisible" in a given activity of AndroidManifest.xml
+  1. Call EditText.requestFocus() during onCreate() or onResume()
 
 ## Open-source libraries used
 
@@ -68,7 +71,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright 2020 Isaiah Suarez
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
