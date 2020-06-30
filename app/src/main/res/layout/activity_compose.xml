@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnTweet"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         app:counterEnabled="true"
         app:counterMaxLength="@integer/max_tweet_length">
@@ -26,7 +26,7 @@
             android:ems="10"
             android:gravity="start|top"
             android:hint="What's happening?"
-            android:inputType="textCapSentences|textMultiLine"/>
+            android:inputType="textCapSentences|textMultiLine" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
