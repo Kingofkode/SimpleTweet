@@ -16,7 +16,7 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
 import java.util.List;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
-    
+
     // Pass in the context and list the tweets
     Context context;
     List<Tweet> tweets;
@@ -48,6 +48,18 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return tweets.size();
+    }
+
+    // Used by pull to refresh
+    public void clear() {
+        tweets.clear();
+        notifyDataSetChanged();
+    }
+
+    // Used by pull to refresh
+    public void addAll(List<Tweet> list) {
+        tweets.addAll(list);
+        notifyDataSetChanged();
     }
 
     // Define a viewholder
