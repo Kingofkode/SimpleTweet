@@ -9,15 +9,15 @@ Time spent: **X** hours spent in total
 The following **required** functionality is completed:
 
 * [x]	User can **sign in to Twitter** using OAuth login
-* [x]	User can **view tweets from their home timeline**
+* [ ]	User can **view tweets from their home timeline**
   * [x] User is displayed the username, name, and body for each tweet
   * [ ] User is displayed the [relative timestamp](https://gist.github.com/nesquena/f786232f5ef72f6e10a7) for each tweet "8m", "7h"
-* [ ] User can **compose and post a new tweet**
-  * [ ] User can click a “Compose” icon in the Action Bar on the top right
-  * [ ] User can then enter a new tweet and post this to twitter
-  * [ ] User is taken back to home timeline with **new tweet visible** in timeline
-  * [ ] Newly created tweet should be manually inserted into the timeline and not rely on a full refresh
-* [ ] User can **see a counter with total number of characters left for tweet** on compose tweet page
+* [x] User can **compose and post a new tweet**
+  * [x] User can click a “Compose” icon in the Action Bar on the top right
+  * [x] User can then enter a new tweet and post this to twitter
+  * [x] User is taken back to home timeline with **new tweet visible** in timeline
+  * [x] Newly created tweet should be manually inserted into the timeline and not rely on a full refresh
+* [x] User can **see a counter with total number of characters left for tweet** on compose tweet page
 * [x] User can **pull down to refresh tweets timeline**
 * [ ] User can **see embedded image media within a tweet** on list or detail view.
 
@@ -32,8 +32,8 @@ The following **stretch** features are implemented:
 * [ ] User can view more tweets as they scroll with infinite pagination
 * [ ] Compose tweet functionality is build using modal overlay
 * [ ] User can **click a link within a tweet body** on tweet details view. The click will launch the web browser with relevant page opened.
-* [ ] Use Parcelable instead of Serializable using the popular [Parceler library](http://guides.codepath.org/android/Using-Parceler).
-* [ ] Replace all icon drawables and other static image assets with [vector drawables](http://guides.codepath.org/android/Drawables#vector-drawables) where appropriate.
+* [x] Use Parcelable instead of Serializable using the popular [Parceler library](http://guides.codepath.org/android/Using-Parceler).
+* [x] Replace all icon drawables and other static image assets with [vector drawables](http://guides.codepath.org/android/Drawables#vector-drawables) where appropriate.
 * [ ] User can view following / followers list through any profile they view.
 * [ ] Use the View Binding library to reduce view boilerplate.
 * [ ] On the Twitter timeline, leverage the [CoordinatorLayout](http://guides.codepath.org/android/Handling-Scrolls-with-CoordinatorLayout#responding-to-scroll-events) to apply scrolling behavior that [hides / shows the toolbar](http://guides.codepath.org/android/Using-the-App-ToolBar#reacting-to-scroll).
@@ -41,7 +41,12 @@ The following **stretch** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] List anything else that you can get done to improve the app functionality!
+* [x] Used higher resolution profile pictures to match the device by referencing the [Profile API](https://developer.twitter.com/en/docs/accounts-and-users/user-profile-images-and-banners)
+* [x] Added circular crop to profile pictures
+* [x] Added dividers between tweets
+* [x] Stylized the typography of TextViews for better readability
+* [x] App shows full tweets instead of summaries by referencing the [Tweet Updates API](https://developer.twitter.com/en/docs/tweets/tweet-updates)
+* [x] Used floating action button from the material design library to compose tweets just like the native Twitter App 
 
 ## Video Walkthrough
 
