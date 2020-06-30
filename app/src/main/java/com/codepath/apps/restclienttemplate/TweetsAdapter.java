@@ -16,6 +16,7 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
 import java.util.List;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
+    
     // Pass in the context and list the tweets
     Context context;
     List<Tweet> tweets;
@@ -36,8 +37,10 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     // Bind values based on the position of the element
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         // Get the data at position
         Tweet tweet = tweets.get(position);
+
         // Bind the tweet with the view holder
         holder.bind(tweet);
     }

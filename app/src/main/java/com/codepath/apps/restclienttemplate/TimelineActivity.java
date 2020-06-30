@@ -21,12 +21,12 @@ import okhttp3.Headers;
 
 public class TimelineActivity extends AppCompatActivity {
     private static final String TAG = "TimelineActivity";
+
     // Instance variables
     TwitterClient client;
     RecyclerView rvTweets;
     List<Tweet> tweets;
     TweetsAdapter adapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +34,21 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
 
         client = TwitterApp.getRestClient(this);
+
         // Find the recycler view
         rvTweets = findViewById(R.id.rvTweets);
+
         // Initialize the list of tweets and adapter
         tweets = new ArrayList<>();
         adapter = new TweetsAdapter(this, tweets);
+
         // Recycler view set up: layout manager and the adapter
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvTweets.setLayoutManager(layoutManager);
         rvTweets.setAdapter(adapter);
         populateHomeTimeline();
 
+        // Add divider lines between items
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvTweets.getContext(),
                 layoutManager.getOrientation());
         rvTweets.addItemDecoration(dividerItemDecoration);
