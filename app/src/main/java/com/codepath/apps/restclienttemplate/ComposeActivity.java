@@ -38,7 +38,9 @@ public class ComposeActivity extends AppCompatActivity {
 
         etCompose = findViewById(R.id.etCompose);
         btnTweet = findViewById(R.id.btnTweet);
-        
+
+        etCompose.requestFocus();
+
         btnTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +82,12 @@ public class ComposeActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 }
