@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,8 @@ import okhttp3.Headers;
 
 public class TimelineActivity extends AppCompatActivity {
     private static final String TAG = "TimelineActivity";
+
+    public static final int COMPOSE_REQUEST_CODE = 20;
 
     // Instance variables
     TwitterClient client;
@@ -63,9 +67,35 @@ public class TimelineActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == COMPOSE_REQUEST_CODE && resultCode == RESULT_OK) {
+
+            // Early out if data is null
+            if (data == null) {
+                return;
+            }
+
+            // Get data from the intent
+            Tweet publishedTweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
+
+            // Modify data source of tweets
+            tweets.add(0, publishedTweet);
+
+            // Update the adapter
+            adapter.notifyItemInserted(0);
+
+            // Scroll to new tweet
+            rvTweets.smoothScrollToPosition(0);
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+
     public void onComposeClick(View view) {
         Intent composeIntent = new Intent(this, ComposeActivity.class);
-        startActivity(composeIntent);
+        startActivityForResult(composeIntent, COMPOSE_REQUEST_CODE);
     }
 
     private void setupPullToRefresh() {

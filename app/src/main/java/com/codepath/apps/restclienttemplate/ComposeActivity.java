@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,6 +15,7 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import okhttp3.Headers;
 
@@ -37,7 +39,7 @@ public class ComposeActivity extends AppCompatActivity {
         client = TwitterApp.getRestClient(this);
 
         MAX_TWEET_LENGTH = this.getResources().getInteger(R.integer.max_tweet_length);
-        
+
         etCompose = findViewById(R.id.etCompose);
         btnTweet = findViewById(R.id.btnTweet);
 
@@ -54,6 +56,15 @@ public class ComposeActivity extends AppCompatActivity {
                         try {
                             Tweet publishedTweet = Tweet.fromJson(json.jsonObject);
                             Log.i(TAG, "Published tweet says: " + publishedTweet);
+                            Intent resultIntent = new Intent();
+                            resultIntent.putExtra("tweet", Parcels.wrap(publishedTweet));
+
+                            // Set result code and bundle data for response
+                            setResult(RESULT_OK, resultIntent);
+
+                            // Close the activity
+                            finish();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
