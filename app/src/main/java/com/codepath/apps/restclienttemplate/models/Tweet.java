@@ -59,6 +59,7 @@ public class Tweet {
         // Customizations
 
         relativeDate = relativeDate.replace("ago", "");
+        relativeDate = relativeDate.replace("In", "");
 
         if (relativeDate.contains("seconds")) {
             relativeDate = relativeDate.replace(" seconds", "s");
@@ -75,7 +76,7 @@ public class Tweet {
         if (relativeDate.contains("minute")) {
             relativeDate = relativeDate.replace(" minute", "m");
         }
-        
+
         return relativeDate;
     }
 
