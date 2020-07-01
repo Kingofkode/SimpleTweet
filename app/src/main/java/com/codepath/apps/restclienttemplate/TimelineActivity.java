@@ -36,6 +36,7 @@ public class TimelineActivity extends AppCompatActivity {
     List<Tweet> tweets;
     TweetsAdapter adapter;
     SwipeRefreshLayout swipeContainer;
+    EndlessRecyclerViewScrollListener scrollListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
 
         client = TwitterApp.getRestClient(this);
+
 
         swipeContainer = findViewById(R.id.swipeContainer);
         setupPullToRefresh();
@@ -58,13 +60,25 @@ public class TimelineActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvTweets.setLayoutManager(layoutManager);
         rvTweets.setAdapter(adapter);
-        populateHomeTimeline();
+
 
         // Add divider lines between items
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvTweets.getContext(),
                 layoutManager.getOrientation());
         rvTweets.addItemDecoration(dividerItemDecoration);
 
+        // Pagination
+        scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                loadMoreTweets();
+            }
+        };
+
+        // Adds the scroll listener to RecyclerView
+        rvTweets.addOnScrollListener(scrollListener);
+
+        populateHomeTimeline();
     }
 
     @Override
@@ -109,6 +123,34 @@ public class TimelineActivity extends AppCompatActivity {
                 populateHomeTimeline();
             }
         });
+    }
+
+    private void loadMoreTweets() {
+        Tweet lastTweet = tweets.get(tweets.size() - 1);
+        // 1. Send an API request to retrieve appropriate paginated data
+        client.getNextPageOfTweets(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.i(TAG, "onSuccess: for loading more tweets");
+
+                // 2. Deserialize and construct new model objects from the API response
+                JSONArray jsonArray = json.jsonArray;
+                try {
+                    List<Tweet> olderTweets = Tweet.fromJsonArray(jsonArray);
+
+                    // 3. Append the new data objects to the existing set of items
+                    // 4. Notify the adapter of the new items made
+                    adapter.addAll(olderTweets);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "onFailure: for loading more tweets");
+            }
+        }, lastTweet.id);
     }
 
     private void populateHomeTimeline() {

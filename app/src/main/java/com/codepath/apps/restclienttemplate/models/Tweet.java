@@ -18,6 +18,7 @@ public class Tweet {
 
     public String body;
     public String createdAt;
+    public long id;
     public User user;
     public Entities entities;
 
@@ -26,6 +27,7 @@ public class Tweet {
 
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
         Tweet tweet = new Tweet();
+        tweet.id = jsonObject.getLong("id");
         tweet.body = jsonObject.getString("full_text");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
@@ -56,26 +58,25 @@ public class Tweet {
             e.printStackTrace();
         }
 
-        // Customizations
+        // Customizations:
+        // Plural word must come before singular
 
         relativeDate = relativeDate.replace("ago", "");
+
         relativeDate = relativeDate.replace("In", "");
 
-        if (relativeDate.contains("seconds")) {
-            relativeDate = relativeDate.replace(" seconds", "s");
-        }
+        // seconds -> s
+        relativeDate = relativeDate.replace(" seconds", "s");
+        relativeDate = relativeDate.replace(" second", "s");
 
-        if (relativeDate.contains("second")) {
-            relativeDate = relativeDate.replace(" second", "s");
-        }
+        // minutes -> m
+        relativeDate = relativeDate.replace(" minutes", "m");
+        relativeDate = relativeDate.replace(" minute", "m");
 
-        if (relativeDate.contains("minutes")) {
-            relativeDate = relativeDate.replace(" minutes", "m");
-        }
+        // hours -> h
+        relativeDate = relativeDate.replace(" hours", "h");
+        relativeDate = relativeDate.replace(" hour", "h");
 
-        if (relativeDate.contains("minute")) {
-            relativeDate = relativeDate.replace(" minute", "m");
-        }
 
         return relativeDate;
     }
