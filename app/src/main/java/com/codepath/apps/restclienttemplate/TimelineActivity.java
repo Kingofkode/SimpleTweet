@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -45,7 +46,6 @@ public class TimelineActivity extends AppCompatActivity {
 
         client = TwitterApp.getRestClient(this);
 
-
         swipeContainer = findViewById(R.id.swipeContainer);
         setupPullToRefresh();
 
@@ -77,6 +77,15 @@ public class TimelineActivity extends AppCompatActivity {
 
         // Adds the scroll listener to RecyclerView
         rvTweets.addOnScrollListener(scrollListener);
+
+        // Tap toolbar to scroll back to the top
+        Toolbar toolbar = findViewById(R.id.twitter_toolbar);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rvTweets.smoothScrollToPosition(0);
+            }
+        });
 
         populateHomeTimeline();
     }
@@ -149,6 +158,7 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.e(TAG, "onFailure: for loading more tweets");
+                showTwitterApiLimitToast();
             }
         }, lastTweet.id);
     }
@@ -175,11 +185,14 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.e(TAG, "onFailure: " + response, throwable);
-
-                Toast.makeText(TimelineActivity.this, "Twitter API Limit Reached. Please try again later.", Toast.LENGTH_LONG).show();
+                showTwitterApiLimitToast();
                 swipeContainer.setRefreshing(false);
             }
         });
+    }
+
+    private void showTwitterApiLimitToast() {
+        Toast.makeText(TimelineActivity.this, "Twitter API Limit Reached. Please try again later.", Toast.LENGTH_LONG).show();
     }
 
 }
