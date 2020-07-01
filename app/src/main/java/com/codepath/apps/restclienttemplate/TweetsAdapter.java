@@ -15,8 +15,6 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import java.util.List;
 
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
 
     // Pass in the context and list the tweets
@@ -88,16 +86,10 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvName.setText(tweet.user.name);
             Glide.with(context).load(tweet.user.profileImageUrl).circleCrop().into(ivProfileImage);
 
-            // Tweet has 1 or more photos/videos. Load the 1st one.
+            // Tweet has 1 or more photos/videos
             if (tweet.entities.mediaList != null) {
                 ivMediaImage.setVisibility(View.VISIBLE);
-                String imageUrl = tweet.entities.mediaList.get(0).mediaUrl;
-                int radius = 30; // corner radius, higher value = more rounded
-                int margin = 10; // crop margin, set to 0 for corners with no crop
-                Glide.with(context)
-                        .load(imageUrl)
-                        .transform(new RoundedCornersTransformation(radius, margin))
-                        .into(ivMediaImage);
+                Glide.with(context).load(tweet.entities.mediaList.get(0).mediaUrl).into(ivMediaImage);
             } else {
                 ivMediaImage.setVisibility(View.GONE);
             }
