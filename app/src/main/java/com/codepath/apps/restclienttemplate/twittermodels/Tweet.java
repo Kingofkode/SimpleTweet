@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate.models;
+package com.codepath.apps.restclienttemplate.twittermodels;
 
 import android.text.format.DateUtils;
 
