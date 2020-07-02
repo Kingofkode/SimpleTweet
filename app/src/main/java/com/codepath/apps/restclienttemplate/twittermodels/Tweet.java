@@ -66,16 +66,16 @@ public class Tweet {
         relativeDate = relativeDate.replace("In", "");
 
         // seconds -> s
-        relativeDate = relativeDate.replace(" seconds", "s");
-        relativeDate = relativeDate.replace(" second", "s");
+        relativeDate = relativeDate.replace(" seconds ", "s");
+        relativeDate = relativeDate.replace(" second ", "s");
 
         // minutes -> m
-        relativeDate = relativeDate.replace(" minutes", "m");
-        relativeDate = relativeDate.replace(" minute", "m");
+        relativeDate = relativeDate.replace(" minutes ", "m");
+        relativeDate = relativeDate.replace(" minute ", "m");
 
         // hours -> h
-        relativeDate = relativeDate.replace(" hours", "h");
-        relativeDate = relativeDate.replace(" hour", "h");
+        relativeDate = relativeDate.replace(" hours ", "h");
+        relativeDate = relativeDate.replace(" hour ", "h");
 
 
         return relativeDate;
