@@ -1,18 +1,18 @@
 package com.codepath.apps.restclienttemplate.activities;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.codepath.apps.restclienttemplate.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.restclienttemplate.R;
@@ -32,6 +32,7 @@ import java.util.List;
 import okhttp3.Headers;
 
 public class TimelineActivity extends AppCompatActivity {
+
     private static final String TAG = "TimelineActivity";
 
     public static final int COMPOSE_REQUEST_CODE = 20;
@@ -42,7 +43,7 @@ public class TimelineActivity extends AppCompatActivity {
     List<Tweet> tweets;
     TweetsAdapter adapter;
     SwipeRefreshLayout swipeContainer;
-    EndlessRecyclerViewScrollListener scrollListener;
+    LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,38 +53,40 @@ public class TimelineActivity extends AppCompatActivity {
         client = TwitterApp.getRestClient(this);
 
         swipeContainer = findViewById(R.id.swipeContainer);
-        setupPullToRefresh();
 
         // Find the recycler view
         rvTweets = findViewById(R.id.rvTweets);
+
+        layoutManager = new LinearLayoutManager(this);
 
         // Initialize the list of tweets and adapter
         tweets = new ArrayList<>();
         adapter = new TweetsAdapter(this, tweets);
 
         // Recycler view set up: layout manager and the adapter
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvTweets.setLayoutManager(layoutManager);
         rvTweets.setAdapter(adapter);
 
+        addTweetDividers();
 
-        // Add divider lines between items
+        setupToolBarClickListener();
+
+        populateHomeTimeline();
+
+        setupPullToRefresh();
+
+        setupPagination();
+    }
+
+    // Add divider lines between tweets
+    private void addTweetDividers() {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvTweets.getContext(),
                 layoutManager.getOrientation());
         rvTweets.addItemDecoration(dividerItemDecoration);
+    }
 
-        // Pagination
-        scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                loadMoreTweets();
-            }
-        };
-
-        // Adds the scroll listener to RecyclerView
-        rvTweets.addOnScrollListener(scrollListener);
-
-        // Tap toolbar to scroll back to the top
+    // Tap toolbar to scroll back to the top
+    private void setupToolBarClickListener() {
         Toolbar toolbar = findViewById(R.id.twitter_toolbar);
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,10 +94,9 @@ public class TimelineActivity extends AppCompatActivity {
                 rvTweets.smoothScrollToPosition(0);
             }
         });
-
-        populateHomeTimeline();
     }
 
+    // Called when returning from ComposeTweetActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == COMPOSE_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -121,6 +123,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     }
 
+    // User taps compose floating button
     public void onComposeClick(View view) {
         Intent composeIntent = new Intent(this, ComposeActivity.class);
         startActivityForResult(composeIntent, COMPOSE_REQUEST_CODE);
@@ -139,6 +142,18 @@ public class TimelineActivity extends AppCompatActivity {
         });
     }
 
+    // Infinite scrolling
+    private void setupPagination() {
+        EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                loadMoreTweets();
+            }
+        };
+        rvTweets.addOnScrollListener(scrollListener);
+    }
+
+    // Request next batch of tweets from API
     private void loadMoreTweets() {
         Tweet lastTweet = tweets.get(tweets.size() - 1);
         // 1. Send an API request to retrieve appropriate paginated data
@@ -168,6 +183,7 @@ public class TimelineActivity extends AppCompatActivity {
         }, lastTweet.id);
     }
 
+    // Called when activity first starts and by pull to refresh
     private void populateHomeTimeline() {
         client.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override
