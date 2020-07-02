@@ -29,7 +29,7 @@ The following **stretch** features are implemented:
   * [ ] User that wrote the original tweet is **automatically "@" replied in compose**
 * [ ] User can tap a tweet to **open a detailed tweet view**
   * [ ] User can **take favorite (and unfavorite) or reweet** actions on a tweet
-* [ ] User can view more tweets as they scroll with infinite pagination
+* [x] User can view more tweets as they scroll with infinite pagination
 * [ ] Compose tweet functionality is build using modal overlay
 * [ ] User can **click a link within a tweet body** on tweet details view. The click will launch the web browser with relevant page opened.
 * [x] Use Parcelable instead of Serializable using the popular [Parceler library](http://guides.codepath.org/android/Using-Parceler).
@@ -48,6 +48,7 @@ The following **additional** features are implemented:
 * [x] App shows full tweets instead of summaries by referencing the [Tweet Updates API](https://developer.twitter.com/en/docs/tweets/tweet-updates)
 * [x] Used floating action button from the material design library to compose tweets just like the native Twitter App 
 * [x] "Tweet" button is dynamically enabled/disabled depending on if tweet is valid (more than 0 characters but less than 280)
+* [x] Tap the top bar to see the latest tweets
 
 ## Video Walkthrough
 
