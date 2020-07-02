@@ -2,7 +2,7 @@
 
 **Simple Tweet** is an android app that allows a user to view their Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
-Time spent: **X** hours spent in total
+Time spent: 20 hours spent in total
 
 ## User Stories
 
@@ -49,26 +49,32 @@ The following **additional** features are implemented:
 * [x] Used floating action button from the material design library to compose tweets just like the native Twitter App 
 * [x] "Tweet" button is dynamically enabled/disabled depending on if tweet is valid (more than 0 characters but less than 280)
 * [x] Tap the top bar to see the latest tweets
+* [x] Added Unit Tests to ensure model and method correctness
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/Kingofkode/SimpleTweet/blob/master/TwitterDemo.gif' title='Video Walkthrough' width='350' alt='Video Walkthrough' />
 
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Challenges while building the app
+
+- Learning how to write unit tests for Android
 
 - Getting the keyboard to pop up automatically when ComposeActivity launches took a lot of research, but to accomplish this it takes 2 steps:
   
   1. Set android:windowSoftInputMode="stateVisible" in a given activity of AndroidManifest.xml
   1. Call EditText.requestFocus() during onCreate() or onResume()
+ 
 
 ## Open-source libraries used
 
 - [Android Async HTTP](https://github.com/loopj/android-async-http) - Simple asynchronous HTTP requests with JSON parsing
 - [Glide](https://github.com/bumptech/glide) - Image loading and caching library for Android
+- [Parceler](https://github.com/johncarl81/parceler) - Java object Serialization when passing them between activities
+- [Roboletric](https://github.com/robolectric/robolectric) - Android dependency management when writing unit tests
+- [Material Components](https://github.com/material-components/material-components-android) - For floating action button in Timeline Activity
 
 ## License
 
